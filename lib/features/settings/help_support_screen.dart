@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../theme/theme.dart';
 
 class HelpSupportScreen extends StatefulWidget {
@@ -92,11 +93,23 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                 title: const Text('Email Support'),
                 subtitle: const Text('support@jetstream.app'),
                 trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: () {
-                  // TODO: Open email client
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Opening email client...')),
+                onTap: () async {
+                  final Uri emailUri = Uri(
+                    scheme: 'mailto',
+                    path: 'support@jetstream.app',
+                    query: 'subject=Jetstream Support Request',
                   );
+                  if (await canLaunchUrl(emailUri)) {
+                    await launchUrl(emailUri);
+                  } else {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Could not open email client'),
+                        ),
+                      );
+                    }
+                  }
                 },
               ),
               const Divider(height: 1),
@@ -146,12 +159,22 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                 ),
                 title: const Text('Terms of Service'),
                 trailing: const Icon(Icons.open_in_new_rounded),
-                onTap: () {
-                  // TODO: Open terms URL
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Opening terms of service...')),
-                  );
+                onTap: () async {
+                  final Uri termsUri = Uri.parse('https://jetstream.app/terms');
+                  if (await canLaunchUrl(termsUri)) {
+                    await launchUrl(
+                      termsUri,
+                      mode: LaunchMode.externalApplication,
+                    );
+                  } else {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Could not open terms of service'),
+                        ),
+                      );
+                    }
+                  }
                 },
               ),
               const Divider(height: 1),

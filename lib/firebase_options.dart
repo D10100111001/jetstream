@@ -13,15 +13,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -35,30 +29,51 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'YOUR_API_KEY',
-    authDomain: 'YOUR_AUTH_DOMAIN',
-    projectId: 'YOUR_PROJECT_ID',
-    storageBucket: 'YOUR_STORAGE_BUCKET',
-    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-    appId: 'YOUR_APP_ID',
-    measurementId: 'YOUR_MEASUREMENT_ID',
+    apiKey: 'AIzaSyCUmBORxUNUBDsBI7Me7EpP8eKr8JmdoMg',
+    appId: '1:849282950622:web:d31fd2fdcc4c098e80e94f',
+    messagingSenderId: '849282950622',
+    projectId: 'jetstream-2e90c',
+    authDomain: 'jetstream-2e90c.firebaseapp.com',
+    storageBucket: 'jetstream-2e90c.firebasestorage.app',
+    measurementId: 'G-F7M1RGD8H8',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR_API_KEY',
-    appId: 'YOUR_APP_ID',
-    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-    projectId: 'YOUR_PROJECT_ID',
-    storageBucket: 'YOUR_STORAGE_BUCKET',
+    apiKey: 'AIzaSyCVEtrALBjPwEnXQ1ykwbhXsfxMoV_Sbf4',
+    appId: '1:849282950622:android:7ce6d7beedf59f1c80e94f',
+    messagingSenderId: '849282950622',
+    projectId: 'jetstream-2e90c',
+    storageBucket: 'jetstream-2e90c.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'YOUR_API_KEY',
-    appId: 'YOUR_APP_ID',
-    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-    projectId: 'YOUR_PROJECT_ID',
-    storageBucket: 'YOUR_STORAGE_BUCKET',
-    iosClientId: 'YOUR_IOS_CLIENT_ID',
-    iosBundleId: 'YOUR_IOS_BUNDLE_ID',
+    apiKey: 'AIzaSyC8wzr-s_9K9MYxEgXUlWxvxcyclgb4Lo8',
+    appId: '1:849282950622:ios:9b1e2cc682bb4d8c80e94f',
+    messagingSenderId: '849282950622',
+    projectId: 'jetstream-2e90c',
+    storageBucket: 'jetstream-2e90c.firebasestorage.app',
+    iosClientId: '849282950622-c9hfdki4t162p46u3vs8rmj7ajlciu01.apps.googleusercontent.com',
+    iosBundleId: 'com.example.jetstreamNew',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyC8wzr-s_9K9MYxEgXUlWxvxcyclgb4Lo8',
+    appId: '1:849282950622:ios:9b1e2cc682bb4d8c80e94f',
+    messagingSenderId: '849282950622',
+    projectId: 'jetstream-2e90c',
+    storageBucket: 'jetstream-2e90c.firebasestorage.app',
+    iosClientId: '849282950622-c9hfdki4t162p46u3vs8rmj7ajlciu01.apps.googleusercontent.com',
+    iosBundleId: 'com.example.jetstreamNew',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCUmBORxUNUBDsBI7Me7EpP8eKr8JmdoMg',
+    appId: '1:849282950622:web:8e967eb432f433b280e94f',
+    messagingSenderId: '849282950622',
+    projectId: 'jetstream-2e90c',
+    authDomain: 'jetstream-2e90c.firebaseapp.com',
+    storageBucket: 'jetstream-2e90c.firebasestorage.app',
+    measurementId: 'G-XSWVKJ11VM',
+  );
+
 }

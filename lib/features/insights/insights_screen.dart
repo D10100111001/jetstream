@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../services/ai_service.dart';
-import '../../services/app_provider.dart';
+import '../../services/flight_service.dart';
 
 class InsightsScreen extends StatefulWidget {
   const InsightsScreen({super.key});
@@ -21,10 +20,9 @@ class _InsightsScreenState extends State<InsightsScreen> {
   }
 
   Future<void> _generateInsights() async {
-    final appProvider = Provider.of<AppProvider>(context, listen: false);
-    final aiService = AiService();
+    final flightService = Provider.of<FlightService>(context, listen: false);
 
-    if (appProvider.flights.isEmpty) {
+    if (flightService.flights.isEmpty) {
       setState(() {
         _insights =
             'Log some flights to see your personalized travel insights!';
@@ -36,15 +34,23 @@ class _InsightsScreenState extends State<InsightsScreen> {
       _isLoading = true;
     });
 
-    final flightHistory = appProvider.flights
-        .map((f) => f.toString())
-        .join('\n');
-    final result = await aiService.generateInsights(flightHistory);
+    try {
+      final result = await flightService.generateInsights();
 
-    setState(() {
-      _insights = result;
-      _isLoading = false;
-    });
+      if (mounted) {
+        setState(() {
+          _insights = result;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _insights = 'Unable to generate insights. Please try again later.';
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override

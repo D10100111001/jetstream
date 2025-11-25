@@ -136,7 +136,7 @@ final ThemeData lightTheme = ThemeData(
       color: JetstreamColors.midnightBlue,
     ),
   ),
-  cardTheme: CardTheme(
+  cardTheme: CardThemeData(
     elevation: 0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
@@ -341,7 +341,7 @@ final ThemeData darkTheme = ThemeData(
       color: JetstreamColors.starlightWhite,
     ),
   ),
-  cardTheme: CardTheme(
+  cardTheme: CardThemeData(
     elevation: 0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),

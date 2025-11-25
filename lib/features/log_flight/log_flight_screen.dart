@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/flight.dart';
-import '../../services/ai_service.dart';
-import '../../services/app_provider.dart';
+import '../../services/flight_service.dart';
+import '../../services/auth_service.dart';
 
 class LogFlightScreen extends StatefulWidget {
   const LogFlightScreen({super.key});
@@ -14,7 +12,6 @@ class LogFlightScreen extends StatefulWidget {
 
 class _LogFlightScreenState extends State<LogFlightScreen> {
   final _textController = TextEditingController();
-  final _aiService = AiService();
   bool _isProcessing = false;
 
   Future<void> _processLog() async {
@@ -25,14 +22,21 @@ class _LogFlightScreenState extends State<LogFlightScreen> {
     });
 
     try {
-      final jsonString = await _aiService.processFlightLog(
+      final flightService = Provider.of<FlightService>(context, listen: false);
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final userId = authService.currentUser?.uid;
+
+      if (userId == null) {
+        throw Exception('User not logged in');
+      }
+
+      // Process the input using the flight service
+      final flight = await flightService.processNaturalLanguageInput(
         _textController.text,
+        userId,
       );
 
       if (!mounted) return;
-
-      final jsonResponse = jsonDecode(jsonString);
-      final flight = Flight.fromJson(jsonResponse);
 
       final confirmed = await showDialog<bool>(
         context: context,
@@ -96,11 +100,14 @@ class _LogFlightScreenState extends State<LogFlightScreen> {
 
       if (confirmed == true) {
         if (!mounted) return;
-        Provider.of<AppProvider>(context, listen: false).addFlight(flight);
         _textController.clear();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Flight Logged Successfully!')),
         );
+      } else {
+        // User cancelled, delete the flight that was already added
+        if (!mounted) return;
+        await flightService.deleteFlight(flight.id);
       }
     } catch (e) {
       if (!mounted) return;

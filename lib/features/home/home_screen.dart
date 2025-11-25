@@ -19,12 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Add mock flights on first load
+    // Load flights from Firestore on first load
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final flightService = context.read<FlightService>();
       final authService = context.read<AuthService>();
-      if (flightService.flights.isEmpty && authService.currentUser != null) {
-        flightService.addMockFlights(authService.currentUser!.uid);
+      if (authService.currentUser != null) {
+        flightService.loadFlights(authService.currentUser!.uid);
       }
     });
   }

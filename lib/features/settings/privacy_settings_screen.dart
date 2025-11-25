@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import '../../theme/theme.dart';
+import '../../services/auth_service.dart';
+import '../../services/flight_service.dart';
 
 class PrivacySettingsScreen extends StatelessWidget {
   const PrivacySettingsScreen({super.key});
@@ -233,12 +237,40 @@ class PrivacySettingsScreen extends StatelessWidget {
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
-              // TODO: Implement account deletion
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Account deletion functionality coming soon'),
-                ),
-              );
+              try {
+                final authService = Provider.of<AuthService>(context, listen: false);
+                final flightService = Provider.of<FlightService>(context, listen: false);
+                
+                // Delete all user flights from Firestore
+                final userId = authService.currentUser?.uid;
+                if (userId != null) {
+                  // Delete all flights
+                  for (final flight in flightService.flights) {
+                    await flightService.deleteFlight(flight.id);
+                  }
+                }
+                
+                // Delete the user account
+                await authService.deleteAccount();
+                
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Account deleted successfully'),
+                    ),
+                  );
+                  context.go('/login');
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Error deleting account: ${e.toString()}'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Delete Account'),
