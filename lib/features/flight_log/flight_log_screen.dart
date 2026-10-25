@@ -32,7 +32,9 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
   Future<void> _processInput() async {
     if (_controller.text.trim().isEmpty) return;
 
-    if (kDebugMode) print('📝 FlightLogScreen: Processing input: "${_controller.text}"');
+    if (kDebugMode) {
+      print('📝 FlightLogScreen: Processing input: "${_controller.text}"');
+    }
 
     setState(() {
       _isProcessing = true;
@@ -42,13 +44,18 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
     try {
       final flightService = context.read<FlightService>();
 
-
       setState(() => _processingStage = 'Searching flights...');
-      
+
       // Analyze input (Extract + Search)
-      final analysis = await flightService.analyzeNaturalLanguageInput(_controller.text);
-      
-      if (kDebugMode) print('✅ Analysis complete. Found ${analysis.candidates.length} candidates');
+      final analysis = await flightService.analyzeNaturalLanguageInput(
+        _controller.text,
+      );
+
+      if (kDebugMode) {
+        print(
+          '✅ Analysis complete. Found ${analysis.candidates.length} candidates',
+        );
+      }
 
       if (!mounted) return;
 
@@ -60,7 +67,6 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
 
       // Show selection UI
       _showCandidateSelection(analysis);
-
     } catch (e, stackTrace) {
       if (kDebugMode) {
         print('❌ FlightLogScreen: Error processing flight: $e');
@@ -68,10 +74,7 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
       }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
         );
         setState(() {
           _isProcessing = false;
@@ -94,7 +97,10 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
     );
   }
 
-  Future<void> _saveFlight(FlightCandidate? candidate, AIFlightExtraction extraction) async {
+  Future<void> _saveFlight(
+    FlightCandidate? candidate,
+    AIFlightExtraction extraction,
+  ) async {
     Navigator.of(context).pop(); // Close the sheet
 
     setState(() {
@@ -188,9 +194,9 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
               children: [
                 // Header
                 Text(
-                  'Tell us about your flight',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                )
+                      'Tell us about your flight',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    )
                     .animate()
                     .fadeIn(duration: 600.ms)
                     .slideY(begin: -0.2, end: 0),
@@ -198,9 +204,9 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
                 const SizedBox(height: 12),
 
                 Text(
-                  'Just describe your flight naturally, and our AI will extract all the details.',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                )
+                      'Just describe your flight naturally, and our AI will extract all the details.',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    )
                     .animate()
                     .fadeIn(duration: 600.ms, delay: 100.ms)
                     .slideY(begin: -0.2, end: 0),
@@ -209,38 +215,42 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
 
                 // Input field
                 Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        JetstreamColors.electricTeal.withOpacity(0.05),
-                        JetstreamColors.purpleAccent.withOpacity(0.05),
-                      ],
-                    ),
-                    border: Border.all(
-                      color: JetstreamColors.electricTeal.withOpacity(0.2),
-                      width: 2,
-                    ),
-                  ),
-                  child: TextField(
-                    controller: _controller,
-                    maxLines: 8,
-                    enabled: !_isProcessing,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    decoration: InputDecoration(
-                      hintText:
-                          'e.g., "Flew Delta from LAX to JFK last Friday. Great crew, but the middle seat was uncomfortable. Some turbulence during landing."',
-                      hintStyle:
-                          Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: JetstreamColors.mediumGray,
-                              ),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.all(20),
-                    ),
-                  ),
-                )
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            JetstreamColors.electricTeal.withValues(
+                              alpha: 0.05,
+                            ),
+                            JetstreamColors.purpleAccent.withValues(
+                              alpha: 0.05,
+                            ),
+                          ],
+                        ),
+                        border: Border.all(
+                          color: JetstreamColors.electricTeal.withValues(
+                            alpha: 0.2,
+                          ),
+                          width: 2,
+                        ),
+                      ),
+                      child: TextField(
+                        controller: _controller,
+                        maxLines: 8,
+                        enabled: !_isProcessing,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        decoration: InputDecoration(
+                          hintText:
+                              'e.g., "Flew Delta from LAX to JFK last Friday. Great crew, but the middle seat was uncomfortable. Some turbulence during landing."',
+                          hintStyle: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: JetstreamColors.mediumGray),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.all(20),
+                        ),
+                      ),
+                    )
                     .animate()
                     .fadeIn(duration: 600.ms, delay: 200.ms)
                     .slideY(begin: 0.2, end: 0),
@@ -254,38 +264,38 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
 
                 // Submit button
                 SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: _isProcessing ? null : _processInput,
-                    child: _isProcessing
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Theme.of(context).colorScheme.onPrimary,
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: _isProcessing ? null : _processInput,
+                        child: _isProcessing
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Theme.of(context).colorScheme.onPrimary,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(width: 12),
+                                  Text(_processingStage),
+                                ],
+                              )
+                            : const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.auto_awesome_rounded),
+                                  SizedBox(width: 8),
+                                  Text('Process with AI'),
+                                ],
                               ),
-                              const SizedBox(width: 12),
-                              Text(_processingStage),
-                            ],
-                          )
-                        : const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.auto_awesome_rounded),
-                              SizedBox(width: 8),
-                              Text('Process with AI'),
-                            ],
-                          ),
-                  ),
-                )
+                      ),
+                    )
                     .animate()
                     .fadeIn(duration: 600.ms, delay: 300.ms)
                     .slideY(begin: 0.2, end: 0),
@@ -297,38 +307,39 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
           if (_isProcessing)
             Positioned.fill(
               child: Container(
-                color:
-                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+                color: Theme.of(
+                  context,
+                ).scaffoldBackgroundColor.withValues(alpha: 0.8),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: const LinearGradient(
-                            colors: [
-                              JetstreamColors.electricTeal,
-                              JetstreamColors.purpleAccent,
-                            ],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                                  JetstreamColors.electricTeal.withOpacity(0.5),
-                              blurRadius: 30,
-                              spreadRadius: 10,
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  JetstreamColors.electricTeal,
+                                  JetstreamColors.purpleAccent,
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: JetstreamColors.electricTeal
+                                      .withValues(alpha: 0.5),
+                                  blurRadius: 30,
+                                  spreadRadius: 10,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.auto_awesome_rounded,
-                          size: 50,
-                          color: Colors.white,
-                        ),
-                      )
+                            child: const Icon(
+                              Icons.auto_awesome_rounded,
+                              size: 50,
+                              color: Colors.white,
+                            ),
+                          )
                           .animate(onPlay: (controller) => controller.repeat())
                           .rotate(duration: 2000.ms)
                           .then()
@@ -360,9 +371,9 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
       children: [
         Text(
           'Try these examples:',
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: JetstreamColors.mediumGray,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleSmall?.copyWith(color: JetstreamColors.mediumGray),
         ),
         const SizedBox(height: 12),
         Wrap(
@@ -376,7 +387,9 @@ class _FlightLogScreenState extends State<FlightLogScreen> {
                   : () {
                       _controller.text = example;
                     },
-              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest,
               side: BorderSide.none,
               labelStyle: Theme.of(context).textTheme.bodySmall,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -408,7 +421,7 @@ class _CandidateSelectionSheet extends StatelessWidget {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -423,12 +436,12 @@ class _CandidateSelectionSheet extends StatelessWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.3),
+                color: Colors.grey.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
           ),
-          
+
           // Header
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -436,9 +449,9 @@ class _CandidateSelectionSheet extends StatelessWidget {
               children: [
                 Text(
                   'Select Your Flight',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
                 if (analysis.candidates.isEmpty)
@@ -449,14 +462,18 @@ class _CandidateSelectionSheet extends StatelessWidget {
               ],
             ),
           ),
-          
+
           if (analysis.candidates.isEmpty)
             Expanded(
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.search_off_rounded, size: 48, color: Colors.grey[400]),
+                    Icon(
+                      Icons.search_off_rounded,
+                      size: 48,
+                      color: Colors.grey[400],
+                    ),
                     const SizedBox(height: 16),
                     Text(
                       'No matching flights found',
@@ -466,9 +483,9 @@ class _CandidateSelectionSheet extends StatelessWidget {
                     Text(
                       'We couldn\'t verify the exact flight details.\nYou can still log it manually.',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey,
-                      ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
@@ -484,7 +501,8 @@ class _CandidateSelectionSheet extends StatelessWidget {
               child: ListView.separated(
                 padding: const EdgeInsets.all(16),
                 itemCount: analysis.candidates.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
                 itemBuilder: (context, index) {
                   final flight = analysis.candidates[index];
                   return _FlightCandidateCard(
@@ -494,7 +512,7 @@ class _CandidateSelectionSheet extends StatelessWidget {
                 },
               ),
             ),
-            
+
           // Footer
           if (analysis.candidates.isNotEmpty)
             Padding(
@@ -514,16 +532,13 @@ class _FlightCandidateCard extends StatelessWidget {
   final FlightCandidate flight;
   final VoidCallback onTap;
 
-  const _FlightCandidateCard({
-    required this.flight,
-    required this.onTap,
-  });
+  const _FlightCandidateCard({required this.flight, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final depTime = flight.departure?.scheduled ?? flight.departure?.actual;
     final arrTime = flight.arrival?.scheduled ?? flight.arrival?.actual;
-    
+
     String formatTime(String? iso) {
       if (iso == null) return '--:--';
       try {
@@ -551,11 +566,13 @@ class _FlightCandidateCard extends StatelessWidget {
 
     return Card(
       elevation: 0,
-      color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.5),
+      color: Theme.of(
+        context,
+      ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: Theme.of(context).dividerColor.withOpacity(0.1),
+          color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
         ),
       ),
       child: InkWell(
@@ -568,9 +585,12 @@ class _FlightCandidateCard extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
+                      color: statusColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -627,16 +647,16 @@ class _FlightCandidateCard extends StatelessWidget {
       children: [
         Text(
           code,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 4),
         Text(
           time,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Colors.grey,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
         ),
       ],
     );

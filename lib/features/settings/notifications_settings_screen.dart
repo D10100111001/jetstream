@@ -20,9 +20,7 @@ class _NotificationsSettingsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notifications'),
-      ),
+      appBar: AppBar(title: const Text('Notifications')),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
@@ -117,9 +115,9 @@ class _NotificationsSettingsScreenState
           padding: const EdgeInsets.only(left: 4, bottom: 12),
           child: Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
         Container(
@@ -127,7 +125,7 @@ class _NotificationsSettingsScreenState
             borderRadius: BorderRadius.circular(20),
             color: Theme.of(context).cardColor,
             border: Border.all(
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
             ),
           ),
           child: Column(children: children),
@@ -149,11 +147,8 @@ class _NotificationsSettingsScreenState
       onChanged: onChanged,
       title: Text(title),
       subtitle: Text(subtitle),
-      secondary: Icon(
-        icon,
-        color: JetstreamColors.electricTeal,
-      ),
-      activeColor: JetstreamColors.electricTeal,
+      secondary: Icon(icon, color: JetstreamColors.electricTeal),
+      activeThumbColor: JetstreamColors.electricTeal,
     );
   }
 }

@@ -64,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: JetstreamColors.sunsetOrange.withOpacity(0.4),
+                color: JetstreamColors.sunsetOrange.withValues(alpha: 0.4),
                 blurRadius: 24,
                 spreadRadius: 2,
                 offset: const Offset(0, 8),
@@ -137,11 +137,11 @@ class ProfileScreen extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        JetstreamColors.electricTeal.withOpacity(
-                          isDark ? 0.15 : 0.08,
+                        JetstreamColors.electricTeal.withValues(
+                          alpha: isDark ? 0.15 : 0.08,
                         ),
-                        JetstreamColors.electricTeal.withOpacity(
-                          isDark ? 0.05 : 0.02,
+                        JetstreamColors.electricTeal.withValues(
+                          alpha: isDark ? 0.05 : 0.02,
                         ),
                       ],
                     ),
@@ -158,11 +158,11 @@ class ProfileScreen extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        JetstreamColors.purpleAccent.withOpacity(
-                          isDark ? 0.15 : 0.08,
+                        JetstreamColors.purpleAccent.withValues(
+                          alpha: isDark ? 0.15 : 0.08,
                         ),
-                        JetstreamColors.purpleAccent.withOpacity(
-                          isDark ? 0.05 : 0.02,
+                        JetstreamColors.purpleAccent.withValues(
+                          alpha: isDark ? 0.05 : 0.02,
                         ),
                       ],
                     ),
@@ -188,11 +188,11 @@ class ProfileScreen extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        JetstreamColors.sunsetOrange.withOpacity(
-                          isDark ? 0.15 : 0.08,
+                        JetstreamColors.sunsetOrange.withValues(
+                          alpha: isDark ? 0.15 : 0.08,
                         ),
-                        JetstreamColors.sunsetOrange.withOpacity(
-                          isDark ? 0.05 : 0.02,
+                        JetstreamColors.sunsetOrange.withValues(
+                          alpha: isDark ? 0.05 : 0.02,
                         ),
                       ],
                     ),
@@ -209,11 +209,11 @@ class ProfileScreen extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        JetstreamColors.goldenYellow.withOpacity(
-                          isDark ? 0.15 : 0.08,
+                        JetstreamColors.goldenYellow.withValues(
+                          alpha: isDark ? 0.15 : 0.08,
                         ),
-                        JetstreamColors.goldenYellow.withOpacity(
-                          isDark ? 0.05 : 0.02,
+                        JetstreamColors.goldenYellow.withValues(
+                          alpha: isDark ? 0.05 : 0.02,
                         ),
                       ],
                     ),
@@ -234,12 +234,12 @@ class ProfileScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: isDark
-                      ? JetstreamColors.deepNavy.withOpacity(0.6)
+                      ? JetstreamColors.deepNavy.withValues(alpha: 0.6)
                       : Colors.white,
                   border: Border.all(
                     color: isDark
-                        ? JetstreamColors.darkGray.withOpacity(0.3)
-                        : JetstreamColors.paleGray.withOpacity(0.5),
+                        ? JetstreamColors.darkGray.withValues(alpha: 0.3)
+                        : JetstreamColors.paleGray.withValues(alpha: 0.5),
                     width: 1,
                   ),
                 ),
@@ -303,8 +303,10 @@ class ProfileScreen extends StatelessWidget {
                 onChanged: (value) {
                   themeProvider.toggleTheme();
                 },
-                activeColor: JetstreamColors.electricTeal,
-                activeTrackColor: JetstreamColors.electricTeal.withOpacity(0.3),
+                activeThumbColor: JetstreamColors.electricTeal,
+                activeTrackColor: JetstreamColors.electricTeal.withValues(
+                  alpha: 0.3,
+                ),
               ),
             )
             .animate()
@@ -378,12 +380,12 @@ class ProfileScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             gradient: LinearGradient(
               colors: [
-                JetstreamColors.sunsetOrange.withOpacity(0.1),
-                JetstreamColors.sunsetOrange.withOpacity(0.05),
+                JetstreamColors.sunsetOrange.withValues(alpha: 0.1),
+                JetstreamColors.sunsetOrange.withValues(alpha: 0.05),
               ],
             ),
             border: Border.all(
-              color: JetstreamColors.sunsetOrange.withOpacity(0.3),
+              color: JetstreamColors.sunsetOrange.withValues(alpha: 0.3),
               width: 1.5,
             ),
           ),
@@ -461,7 +463,7 @@ class _StatCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         gradient: gradient,
         border: Border.all(
-          color: iconColor.withOpacity(isDark ? 0.2 : 0.15),
+          color: iconColor.withValues(alpha: isDark ? 0.2 : 0.15),
           width: 1,
         ),
       ),
@@ -471,7 +473,7 @@ class _StatCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(isDark ? 0.2 : 0.15),
+              color: iconColor.withValues(alpha: isDark ? 0.2 : 0.15),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon, color: iconColor, size: 20),
@@ -522,12 +524,12 @@ class _SettingsCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: isDark
-            ? JetstreamColors.deepNavy.withOpacity(0.6)
+            ? JetstreamColors.deepNavy.withValues(alpha: 0.6)
             : Colors.white,
         border: Border.all(
           color: isDark
-              ? JetstreamColors.darkGray.withOpacity(0.3)
-              : JetstreamColors.paleGray.withOpacity(0.5),
+              ? JetstreamColors.darkGray.withValues(alpha: 0.3)
+              : JetstreamColors.paleGray.withValues(alpha: 0.5),
           width: 1,
         ),
       ),
@@ -543,7 +545,7 @@ class _SettingsCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(isDark ? 0.15 : 0.1),
+                    color: iconColor.withValues(alpha: isDark ? 0.15 : 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Icon(icon, color: iconColor, size: 20),
@@ -588,8 +590,8 @@ class _InfoRow extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: JetstreamColors.sunsetOrange.withOpacity(
-              isDark ? 0.15 : 0.1,
+            color: JetstreamColors.sunsetOrange.withValues(
+              alpha: isDark ? 0.15 : 0.1,
             ),
             borderRadius: BorderRadius.circular(12),
           ),

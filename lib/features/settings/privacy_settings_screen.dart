@@ -13,9 +13,7 @@ class PrivacySettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Privacy'),
-      ),
+      appBar: AppBar(title: const Text('Privacy')),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
@@ -146,9 +144,9 @@ class PrivacySettingsScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 4, bottom: 12),
           child: Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
         Container(
@@ -156,7 +154,7 @@ class PrivacySettingsScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             color: Theme.of(context).cardColor,
             border: Border.all(
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
             ),
           ),
           child: Column(children: children),
@@ -183,7 +181,8 @@ class PrivacySettingsScreen extends StatelessWidget {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                    content: Text('Export functionality coming soon')),
+                  content: Text('Export functionality coming soon'),
+                ),
               );
             },
             child: const Text('Export'),
@@ -209,9 +208,9 @@ class PrivacySettingsScreen extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('All data deleted')),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('All data deleted')));
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Delete'),
@@ -238,9 +237,15 @@ class PrivacySettingsScreen extends StatelessWidget {
             onPressed: () async {
               Navigator.pop(context);
               try {
-                final authService = Provider.of<AuthService>(context, listen: false);
-                final flightService = Provider.of<FlightService>(context, listen: false);
-                
+                final authService = Provider.of<AuthService>(
+                  context,
+                  listen: false,
+                );
+                final flightService = Provider.of<FlightService>(
+                  context,
+                  listen: false,
+                );
+
                 // Delete all user flights from Firestore
                 final userId = authService.currentUser?.uid;
                 if (userId != null) {
@@ -249,10 +254,10 @@ class PrivacySettingsScreen extends StatelessWidget {
                     await flightService.deleteFlight(flight.id);
                   }
                 }
-                
+
                 // Delete the user account
                 await authService.deleteAccount();
-                
+
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(

@@ -51,7 +51,8 @@ class FlightDetailsScreen extends StatelessWidget {
                 builder: (context) => AlertDialog(
                   title: const Text('Delete Flight'),
                   content: const Text(
-                      'Are you sure you want to delete this flight?'),
+                    'Are you sure you want to delete this flight?',
+                  ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context, false),
@@ -59,9 +60,7 @@ class FlightDetailsScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, true),
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.red,
-                      ),
+                      style: TextButton.styleFrom(foregroundColor: Colors.red),
                       child: const Text('Delete'),
                     ),
                   ],
@@ -71,9 +70,9 @@ class FlightDetailsScreen extends StatelessWidget {
               if (confirmed == true && context.mounted) {
                 flightService.deleteFlight(flightId);
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Flight deleted')),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('Flight deleted')));
               }
             },
           ),
@@ -107,14 +106,11 @@ class FlightDetailsScreen extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            JetstreamColors.electricTeal,
-            JetstreamColors.purpleAccent,
-          ],
+          colors: [JetstreamColors.electricTeal, JetstreamColors.purpleAccent],
         ),
         boxShadow: [
           BoxShadow(
-            color: JetstreamColors.electricTeal.withOpacity(0.3),
+            color: JetstreamColors.electricTeal.withValues(alpha: 0.3),
             blurRadius: 20,
             spreadRadius: 5,
           ),
@@ -131,37 +127,42 @@ class FlightDetailsScreen extends StatelessWidget {
                   Text(
                     flight.airline,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                   Text(
                     flight.flightNumber,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.white.withOpacity(0.9),
-                        ),
+                      color: Colors.white.withValues(alpha: 0.9),
+                    ),
                   ),
                 ],
               ),
               if (flight.experience != null)
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.star_rounded,
-                          color: Colors.white, size: 20),
+                      const Icon(
+                        Icons.star_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         flight.experience!.overallRating.toString(),
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                            ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ],
                   ),
@@ -178,103 +179,103 @@ class FlightDetailsScreen extends StatelessWidget {
     final timeFormat = DateFormat('h:mm a');
 
     return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).cardColor,
-        border: Border.all(
-          color: Theme.of(context).colorScheme.surfaceVariant,
-        ),
-      ),
-      child: Column(
-        children: [
-          Row(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Theme.of(context).cardColor,
+            border: Border.all(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            ),
+          ),
+          child: Column(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Departure',
-                      style: Theme.of(context).textTheme.bodySmall,
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Departure',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          flight.origin,
+                          style: Theme.of(context).textTheme.headlineMedium
+                              ?.copyWith(fontWeight: FontWeight.w800),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          timeFormat.format(flight.departureTime),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Text(
+                          dateFormat.format(flight.departureTime),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      flight.origin,
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.w800,
-                              ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      timeFormat.format(flight.departureTime),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      dateFormat.format(flight.departureTime),
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: JetstreamColors.electricTeal.withOpacity(0.1),
-                ),
-                child: const Icon(
-                  Icons.arrow_forward_rounded,
-                  color: JetstreamColors.electricTeal,
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Arrival',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      flight.destination,
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.w800,
-                              ),
-                    ),
-                    const SizedBox(height: 4),
-                    if (flight.arrivalTime != null) ...[
-                      Text(
-                        timeFormat.format(flight.arrivalTime!),
-                        style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: JetstreamColors.electricTeal.withValues(
+                        alpha: 0.1,
                       ),
-                      Text(
-                        dateFormat.format(flight.arrivalTime!),
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ] else
-                      Text(
-                        'N/A',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                  ],
-                ),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_forward_rounded,
+                      color: JetstreamColors.electricTeal,
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Arrival',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          flight.destination,
+                          style: Theme.of(context).textTheme.headlineMedium
+                              ?.copyWith(fontWeight: FontWeight.w800),
+                        ),
+                        const SizedBox(height: 4),
+                        if (flight.arrivalTime != null) ...[
+                          Text(
+                            timeFormat.format(flight.arrivalTime!),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Text(
+                            dateFormat.format(flight.arrivalTime!),
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ] else
+                          Text(
+                            'N/A',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
-    )
+        )
         .animate()
         .fadeIn(duration: 600.ms, delay: 100.ms)
         .slideY(begin: 0.2, end: 0);
   }
 
   Widget _buildExperienceSection(
-      BuildContext context, FlightExperience experience) {
+    BuildContext context,
+    FlightExperience experience,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -290,10 +291,13 @@ class FlightDetailsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: _getSentimentColor(experience.sentiment).withOpacity(0.1),
+              color: _getSentimentColor(
+                experience.sentiment,
+              ).withValues(alpha: 0.1),
               border: Border.all(
-                color:
-                    _getSentimentColor(experience.sentiment).withOpacity(0.3),
+                color: _getSentimentColor(
+                  experience.sentiment,
+                ).withValues(alpha: 0.3),
               ),
             ),
             child: Row(
@@ -308,9 +312,9 @@ class FlightDetailsScreen extends StatelessWidget {
                 Text(
                   experience.sentiment!.toUpperCase(),
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: _getSentimentColor(experience.sentiment),
-                        fontWeight: FontWeight.w700,
-                      ),
+                    color: _getSentimentColor(experience.sentiment),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ],
             ),
@@ -324,15 +328,16 @@ class FlightDetailsScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color:
-                  Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+              color: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
             ),
             child: Text(
               experience.comment!,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontStyle: FontStyle.italic,
-                    height: 1.6,
-                  ),
+                fontStyle: FontStyle.italic,
+                height: 1.6,
+              ),
             ),
           ).animate().fadeIn(duration: 600.ms, delay: 300.ms),
 
@@ -340,31 +345,30 @@ class FlightDetailsScreen extends StatelessWidget {
 
         // Tags
         if (experience.tags.isNotEmpty) ...[
-          Text(
-            'Tags',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          Text('Tags', style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 12),
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: experience.tags.map((tag) {
               return Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: JetstreamColors.electricTeal.withOpacity(0.1),
+                  color: JetstreamColors.electricTeal.withValues(alpha: 0.1),
                   border: Border.all(
-                    color: JetstreamColors.electricTeal.withOpacity(0.3),
+                    color: JetstreamColors.electricTeal.withValues(alpha: 0.3),
                   ),
                 ),
                 child: Text(
                   tag,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: JetstreamColors.electricTeal,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    color: JetstreamColors.electricTeal,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               );
             }).toList(),
@@ -395,18 +399,17 @@ class FlightDetailsScreen extends StatelessWidget {
                         ),
                         Text(
                           '${entry.value}/5',
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),
                     const SizedBox(height: 4),
                     LinearProgressIndicator(
                       value: entry.value / 5,
-                      backgroundColor:
-                          Theme.of(context).colorScheme.surfaceVariant,
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.surfaceContainerHighest,
                       color: JetstreamColors.electricTeal,
                       minHeight: 8,
                     ),
@@ -420,10 +423,7 @@ class FlightDetailsScreen extends StatelessWidget {
         if (experience.highlights.isNotEmpty)
           ...[
             const SizedBox(height: 16),
-            Text(
-              'Highlights',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Highlights', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 12),
             ...experience.highlights.map((highlight) {
               return Padding(
@@ -453,10 +453,7 @@ class FlightDetailsScreen extends StatelessWidget {
         if (experience.issues.isNotEmpty)
           ...[
             const SizedBox(height: 16),
-            Text(
-              'Issues',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Text('Issues', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 12),
             ...experience.issues.map((issue) {
               return Padding(
@@ -487,31 +484,31 @@ class FlightDetailsScreen extends StatelessWidget {
 
   Widget _buildFlightInfo(BuildContext context, Flight flight) {
     return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).cardColor,
-        border: Border.all(
-          color: Theme.of(context).colorScheme.surfaceVariant,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Flight Information',
-            style: Theme.of(context).textTheme.titleMedium,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Theme.of(context).cardColor,
+            border: Border.all(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            ),
           ),
-          const SizedBox(height: 16),
-          if (flight.aircraftType != null)
-            _buildInfoRow(context, 'Aircraft', flight.aircraftType!),
-          if (flight.seatNumber != null)
-            _buildInfoRow(context, 'Seat', flight.seatNumber!),
-          if (flight.cabinClass != null)
-            _buildInfoRow(context, 'Class', flight.cabinClass!),
-        ],
-      ),
-    )
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Flight Information',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 16),
+              if (flight.aircraftType != null)
+                _buildInfoRow(context, 'Aircraft', flight.aircraftType!),
+              if (flight.seatNumber != null)
+                _buildInfoRow(context, 'Seat', flight.seatNumber!),
+              if (flight.cabinClass != null)
+                _buildInfoRow(context, 'Class', flight.cabinClass!),
+            ],
+          ),
+        )
         .animate()
         .fadeIn(duration: 600.ms, delay: 550.ms)
         .slideY(begin: 0.2, end: 0);
@@ -525,15 +522,15 @@ class FlightDetailsScreen extends StatelessWidget {
         children: [
           Text(
             label,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: JetstreamColors.mediumGray,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: JetstreamColors.mediumGray),
           ),
           Text(
             value,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
           ),
         ],
       ),

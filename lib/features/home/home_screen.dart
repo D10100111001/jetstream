@@ -71,30 +71,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // Flights List
           if (flightService.flights.isEmpty)
-            SliverFillRemaining(
-              child: _buildEmptyState(context),
-            )
+            SliverFillRemaining(child: _buildEmptyState(context))
           else
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final flight = flightService.flights[index];
-                    return _FlightCard(flight: flight)
-                        .animate()
-                        .fadeIn(duration: 400.ms, delay: (index * 100).ms)
-                        .slideY(begin: 0.2, end: 0);
-                  },
-                  childCount: flightService.flights.length,
-                ),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final flight = flightService.flights[index];
+                  return _FlightCard(flight: flight)
+                      .animate()
+                      .fadeIn(duration: 400.ms, delay: (index * 100).ms)
+                      .slideY(begin: 0.2, end: 0);
+                }, childCount: flightService.flights.length),
               ),
             ),
 
           // Bottom spacing
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 100),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -117,10 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Welcome back,',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            Text('Welcome back,', style: Theme.of(context).textTheme.bodySmall),
             Text(
               user?.displayName?.split(' ').first ?? 'Traveler',
               style: Theme.of(context).textTheme.titleLarge,
@@ -187,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 120,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
             ),
             child: Icon(
               Icons.flight_rounded,
@@ -251,37 +241,24 @@ class _StatCard extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            color.withOpacity(0.1),
-            color.withOpacity(0.05),
-          ],
+          colors: [color.withValues(alpha: 0.1), color.withValues(alpha: 0.05)],
         ),
-        border: Border.all(
-          color: color.withOpacity(0.2),
-          width: 1,
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            icon,
-            color: color,
-            size: 24,
-          ),
+          Icon(icon, color: color, size: 24),
           const SizedBox(height: 12),
           Text(
             value,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.w800,
-                ),
+              color: color,
+              fontWeight: FontWeight.w800,
+            ),
           ),
           const SizedBox(height: 4),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+          Text(label, style: Theme.of(context).textTheme.bodySmall),
         ],
       ),
     );
@@ -304,7 +281,7 @@ class _FlightCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: Theme.of(context).cardColor,
         border: Border.all(
-          color: Theme.of(context).colorScheme.surfaceVariant,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           width: 1,
         ),
       ),
@@ -331,8 +308,9 @@ class _FlightCard extends StatelessWidget {
                           height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color:
-                                JetstreamColors.electricTeal.withOpacity(0.1),
+                            color: JetstreamColors.electricTeal.withValues(
+                              alpha: 0.1,
+                            ),
                           ),
                           child: const Icon(
                             Icons.flight_rounded,
@@ -358,7 +336,9 @@ class _FlightCard extends StatelessWidget {
                     ),
                     if (flight.experience != null)
                       _buildRatingBadge(
-                          context, flight.experience!.overallRating),
+                        context,
+                        flight.experience!.overallRating,
+                      ),
                   ],
                 ),
 
@@ -426,24 +406,27 @@ class _FlightCard extends StatelessWidget {
                     children: flight.experience!.tags.take(3).map((tag) {
                       return Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: _getTagColor(flight.experience!.sentiment)
-                              .withOpacity(0.1),
+                          color: _getTagColor(
+                            flight.experience!.sentiment,
+                          ).withValues(alpha: 0.1),
                           border: Border.all(
-                            color: _getTagColor(flight.experience!.sentiment)
-                                .withOpacity(0.3),
+                            color: _getTagColor(
+                              flight.experience!.sentiment,
+                            ).withValues(alpha: 0.3),
                           ),
                         ),
                         child: Text(
                           tag,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
+                          style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(
-                                color:
-                                    _getTagColor(flight.experience!.sentiment),
+                                color: _getTagColor(
+                                  flight.experience!.sentiment,
+                                ),
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
@@ -464,26 +447,22 @@ class _FlightCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: _getRatingColor(rating).withOpacity(0.1),
+        color: _getRatingColor(rating).withValues(alpha: 0.1),
         border: Border.all(
-          color: _getRatingColor(rating).withOpacity(0.3),
+          color: _getRatingColor(rating).withValues(alpha: 0.3),
         ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.star_rounded,
-            size: 16,
-            color: _getRatingColor(rating),
-          ),
+          Icon(Icons.star_rounded, size: 16, color: _getRatingColor(rating)),
           const SizedBox(width: 4),
           Text(
             rating.toString(),
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: _getRatingColor(rating),
-                  fontWeight: FontWeight.w700,
-                ),
+              color: _getRatingColor(rating),
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),

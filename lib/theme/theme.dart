@@ -33,7 +33,7 @@ final ThemeData lightTheme = ThemeData(
     onSecondary: Colors.white,
     surface: JetstreamColors.starlightWhite,
     onSurface: JetstreamColors.darkGray,
-    surfaceVariant: JetstreamColors.paleGray,
+    surfaceContainerHighest: JetstreamColors.paleGray,
     error: Color(0xFFEF4444),
   ),
   scaffoldBackgroundColor: JetstreamColors.starlightWhite,
@@ -138,9 +138,7 @@ final ThemeData lightTheme = ThemeData(
   ),
   cardTheme: CardThemeData(
     elevation: 0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     color: Colors.white,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -150,9 +148,7 @@ final ThemeData lightTheme = ThemeData(
       backgroundColor: JetstreamColors.electricTeal,
       disabledForegroundColor: JetstreamColors.lightGray,
       disabledBackgroundColor: JetstreamColors.paleGray,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       textStyle: GoogleFonts.inter(
         fontSize: 16,
@@ -165,9 +161,7 @@ final ThemeData lightTheme = ThemeData(
     style: OutlinedButton.styleFrom(
       foregroundColor: JetstreamColors.electricTeal,
       side: const BorderSide(color: JetstreamColors.electricTeal, width: 2),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       textStyle: GoogleFonts.inter(
         fontSize: 16,
@@ -199,8 +193,10 @@ final ThemeData lightTheme = ThemeData(
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
-      borderSide:
-          const BorderSide(color: JetstreamColors.electricTeal, width: 2),
+      borderSide: const BorderSide(
+        color: JetstreamColors.electricTeal,
+        width: 2,
+      ),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
@@ -238,7 +234,7 @@ final ThemeData darkTheme = ThemeData(
     onSecondary: Colors.white,
     surface: JetstreamColors.deepNavy,
     onSurface: JetstreamColors.starlightWhite,
-    surfaceVariant: JetstreamColors.darkGray,
+    surfaceContainerHighest: JetstreamColors.darkGray,
     error: Color(0xFFEF4444),
   ),
   scaffoldBackgroundColor: JetstreamColors.midnightBlue,
@@ -343,9 +339,7 @@ final ThemeData darkTheme = ThemeData(
   ),
   cardTheme: CardThemeData(
     elevation: 0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     color: JetstreamColors.deepNavy,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -355,9 +349,7 @@ final ThemeData darkTheme = ThemeData(
       backgroundColor: JetstreamColors.electricTeal,
       disabledForegroundColor: JetstreamColors.mediumGray,
       disabledBackgroundColor: JetstreamColors.darkGray,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       textStyle: GoogleFonts.inter(
         fontSize: 16,
@@ -370,9 +362,7 @@ final ThemeData darkTheme = ThemeData(
     style: OutlinedButton.styleFrom(
       foregroundColor: JetstreamColors.electricTeal,
       side: const BorderSide(color: JetstreamColors.electricTeal, width: 2),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       textStyle: GoogleFonts.inter(
         fontSize: 16,
@@ -404,8 +394,10 @@ final ThemeData darkTheme = ThemeData(
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
-      borderSide:
-          const BorderSide(color: JetstreamColors.electricTeal, width: 2),
+      borderSide: const BorderSide(
+        color: JetstreamColors.electricTeal,
+        width: 2,
+      ),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
@@ -438,8 +430,9 @@ class ThemeProvider with ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
 
   void toggleTheme() {
-    _themeMode =
-        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    _themeMode = _themeMode == ThemeMode.light
+        ? ThemeMode.dark
+        : ThemeMode.light;
     notifyListeners();
   }
 

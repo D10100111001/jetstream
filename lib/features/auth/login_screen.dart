@@ -111,34 +111,37 @@ class _LoginScreenState extends State<LoginScreen>
       children: [
         // App icon with glow effect
         Container(
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                JetstreamColors.electricTeal,
-                JetstreamColors.brightCyan,
-              ],
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: JetstreamColors.electricTeal.withOpacity(0.5),
-                blurRadius: 40,
-                spreadRadius: 10,
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    JetstreamColors.electricTeal,
+                    JetstreamColors.brightCyan,
+                  ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: JetstreamColors.electricTeal.withValues(alpha: 0.5),
+                    blurRadius: 40,
+                    spreadRadius: 10,
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: const Icon(
-            Icons.flight_takeoff_rounded,
-            size: 60,
-            color: Colors.white,
-          ),
-        )
+              child: const Icon(
+                Icons.flight_takeoff_rounded,
+                size: 60,
+                color: Colors.white,
+              ),
+            )
             .animate(onPlay: (controller) => controller.repeat())
-            .shimmer(duration: 2000.ms, color: Colors.white.withOpacity(0.3))
+            .shimmer(
+              duration: 2000.ms,
+              color: Colors.white.withValues(alpha: 0.3),
+            )
             .then()
             .shake(duration: 500.ms, hz: 2, curve: Curves.easeInOut),
 
@@ -148,23 +151,23 @@ class _LoginScreenState extends State<LoginScreen>
         Text(
           'Jetstream',
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                color: JetstreamColors.starlightWhite,
-                fontWeight: FontWeight.w900,
-                letterSpacing: -2,
-              ),
+            color: JetstreamColors.starlightWhite,
+            fontWeight: FontWeight.w900,
+            letterSpacing: -2,
+          ),
         ).animate().fadeIn(duration: 600.ms).slideY(begin: -0.3, end: 0),
 
         const SizedBox(height: 12),
 
         // Tagline
         Text(
-          'AI-Native Passenger Intelligence',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              'AI-Native Passenger Intelligence',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: JetstreamColors.lightGray,
                 fontWeight: FontWeight.w400,
               ),
-          textAlign: TextAlign.center,
-        )
+              textAlign: TextAlign.center,
+            )
             .animate()
             .fadeIn(duration: 600.ms, delay: 200.ms)
             .slideY(begin: -0.3, end: 0),
@@ -177,12 +180,12 @@ class _LoginScreenState extends State<LoginScreen>
       children: [
         // Google Sign In
         _SocialSignInButton(
-          onPressed: _isLoading ? null : _handleGoogleSignIn,
-          icon: Icons.g_mobiledata_rounded,
-          label: 'Continue with Google',
-          backgroundColor: Colors.white,
-          foregroundColor: JetstreamColors.darkGray,
-        )
+              onPressed: _isLoading ? null : _handleGoogleSignIn,
+              icon: Icons.g_mobiledata_rounded,
+              label: 'Continue with Google',
+              backgroundColor: Colors.white,
+              foregroundColor: JetstreamColors.darkGray,
+            )
             .animate()
             .fadeIn(duration: 600.ms, delay: 400.ms)
             .slideX(begin: -0.2, end: 0),
@@ -191,13 +194,13 @@ class _LoginScreenState extends State<LoginScreen>
 
         // Apple Sign In
         _SocialSignInButton(
-          onPressed: _isLoading ? null : _handleAppleSignIn,
-          icon: Icons.apple_rounded,
-          label: 'Continue with Apple',
-          backgroundColor: Colors.white.withOpacity(0.1),
-          foregroundColor: JetstreamColors.starlightWhite,
-          borderColor: Colors.white.withOpacity(0.2),
-        )
+              onPressed: _isLoading ? null : _handleAppleSignIn,
+              icon: Icons.apple_rounded,
+              label: 'Continue with Apple',
+              backgroundColor: Colors.white.withValues(alpha: 0.1),
+              foregroundColor: JetstreamColors.starlightWhite,
+              borderColor: Colors.white.withValues(alpha: 0.2),
+            )
             .animate()
             .fadeIn(duration: 600.ms, delay: 500.ms)
             .slideX(begin: -0.2, end: 0),
@@ -210,9 +213,9 @@ class _LoginScreenState extends State<LoginScreen>
       children: [
         Text(
           'By continuing, you agree to our',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: JetstreamColors.mediumGray,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: JetstreamColors.mediumGray),
         ),
         const SizedBox(height: 4),
         Row(
@@ -228,16 +231,16 @@ class _LoginScreenState extends State<LoginScreen>
               child: Text(
                 'Terms of Service',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: JetstreamColors.electricTeal,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  color: JetstreamColors.electricTeal,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             Text(
               ' and ',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: JetstreamColors.mediumGray,
-                  ),
+                color: JetstreamColors.mediumGray,
+              ),
             ),
             TextButton(
               onPressed: () {},
@@ -249,9 +252,9 @@ class _LoginScreenState extends State<LoginScreen>
               child: Text(
                 'Privacy Policy',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: JetstreamColors.electricTeal,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  color: JetstreamColors.electricTeal,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],
@@ -266,24 +269,27 @@ class _LoginScreenState extends State<LoginScreen>
       return Positioned(
         left: random.nextDouble() * 400,
         top: random.nextDouble() * 800,
-        child: Container(
-          width: random.nextDouble() * 4 + 2,
-          height: random.nextDouble() * 4 + 2,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white.withOpacity(0.3),
-          ),
-        )
-            .animate(onPlay: (controller) => controller.repeat(reverse: true))
-            .moveY(
-              begin: 0,
-              end: random.nextDouble() * 100 - 50,
-              duration: Duration(milliseconds: 2000 + random.nextInt(2000)),
-              curve: Curves.easeInOut,
-            )
-            .fadeIn(duration: 1000.ms)
-            .then()
-            .fadeOut(duration: 1000.ms),
+        child:
+            Container(
+                  width: random.nextDouble() * 4 + 2,
+                  height: random.nextDouble() * 4 + 2,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withValues(alpha: 0.3),
+                  ),
+                )
+                .animate(
+                  onPlay: (controller) => controller.repeat(reverse: true),
+                )
+                .moveY(
+                  begin: 0,
+                  end: random.nextDouble() * 100 - 50,
+                  duration: Duration(milliseconds: 2000 + random.nextInt(2000)),
+                  curve: Curves.easeInOut,
+                )
+                .fadeIn(duration: 1000.ms)
+                .then()
+                .fadeOut(duration: 1000.ms),
       );
     });
   }
@@ -330,7 +336,7 @@ class _AnimatedGradientBackgroundState
                 JetstreamColors.deepNavy,
                 Color.lerp(
                   JetstreamColors.midnightBlue,
-                  JetstreamColors.electricTeal.withOpacity(0.2),
+                  JetstreamColors.electricTeal.withValues(alpha: 0.2),
                   _controller.value,
                 )!,
               ],
@@ -372,7 +378,7 @@ class _SocialSignInButton extends StatelessWidget {
         boxShadow: borderColor == null
             ? [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

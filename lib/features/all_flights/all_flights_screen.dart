@@ -35,10 +35,7 @@ class _AllFlightsScreenState extends State<AllFlightsScreen> {
               });
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: 'date',
-                child: Text('Sort by Date'),
-              ),
+              const PopupMenuItem(value: 'date', child: Text('Sort by Date')),
               const PopupMenuItem(
                 value: 'airline',
                 child: Text('Sort by Airline'),
@@ -81,8 +78,8 @@ class _AllFlightsScreenState extends State<AllFlightsScreen> {
               child: Text(
                 '${flights.length} flight${flights.length != 1 ? 's' : ''}',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: JetstreamColors.mediumGray,
-                    ),
+                  color: JetstreamColors.mediumGray,
+                ),
               ),
             ),
           ),
@@ -145,11 +142,7 @@ class _AllFlightsScreenState extends State<AllFlightsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.search_off_rounded,
-            size: 80,
-            color: Colors.grey.shade400,
-          ),
+          Icon(Icons.search_off_rounded, size: 80, color: Colors.grey.shade400),
           const SizedBox(height: 16),
           Text(
             'No flights found',
@@ -182,7 +175,7 @@ class _FlightCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: Theme.of(context).cardColor,
         border: Border.all(
-          color: Theme.of(context).colorScheme.surfaceVariant,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           width: 1,
         ),
       ),
@@ -209,8 +202,9 @@ class _FlightCard extends StatelessWidget {
                           height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color:
-                                JetstreamColors.electricTeal.withOpacity(0.1),
+                            color: JetstreamColors.electricTeal.withValues(
+                              alpha: 0.1,
+                            ),
                           ),
                           child: const Icon(
                             Icons.flight_rounded,
@@ -236,7 +230,9 @@ class _FlightCard extends StatelessWidget {
                     ),
                     if (flight.experience != null)
                       _buildRatingBadge(
-                          context, flight.experience!.overallRating),
+                        context,
+                        flight.experience!.overallRating,
+                      ),
                   ],
                 ),
 
@@ -304,24 +300,27 @@ class _FlightCard extends StatelessWidget {
                     children: flight.experience!.tags.take(3).map((tag) {
                       return Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: _getTagColor(flight.experience!.sentiment)
-                              .withOpacity(0.1),
+                          color: _getTagColor(
+                            flight.experience!.sentiment,
+                          ).withValues(alpha: 0.1),
                           border: Border.all(
-                            color: _getTagColor(flight.experience!.sentiment)
-                                .withOpacity(0.3),
+                            color: _getTagColor(
+                              flight.experience!.sentiment,
+                            ).withValues(alpha: 0.3),
                           ),
                         ),
                         child: Text(
                           tag,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
+                          style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(
-                                color:
-                                    _getTagColor(flight.experience!.sentiment),
+                                color: _getTagColor(
+                                  flight.experience!.sentiment,
+                                ),
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
@@ -342,26 +341,22 @@ class _FlightCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: _getRatingColor(rating).withOpacity(0.1),
+        color: _getRatingColor(rating).withValues(alpha: 0.1),
         border: Border.all(
-          color: _getRatingColor(rating).withOpacity(0.3),
+          color: _getRatingColor(rating).withValues(alpha: 0.3),
         ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.star_rounded,
-            size: 16,
-            color: _getRatingColor(rating),
-          ),
+          Icon(Icons.star_rounded, size: 16, color: _getRatingColor(rating)),
           const SizedBox(width: 4),
           Text(
             rating.toString(),
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: _getRatingColor(rating),
-                  fontWeight: FontWeight.w700,
-                ),
+              color: _getRatingColor(rating),
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),

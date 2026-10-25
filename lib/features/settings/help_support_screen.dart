@@ -36,9 +36,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Help & Support'),
-      ),
+      appBar: AppBar(title: const Text('Help & Support')),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
@@ -212,9 +210,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
           padding: const EdgeInsets.only(left: 4, bottom: 12),
           child: Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
         Container(
@@ -222,7 +220,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             borderRadius: BorderRadius.circular(20),
             color: Theme.of(context).cardColor,
             border: Border.all(
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
             ),
           ),
           child: Column(children: children),
@@ -241,10 +239,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.all(16),
-          child: Text(
-            answer,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          child: Text(answer, style: Theme.of(context).textTheme.bodyMedium),
         ),
       ],
     );
@@ -274,7 +269,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                    content: Text('Bug report submitted. Thank you!')),
+                  content: Text('Bug report submitted. Thank you!'),
+                ),
               );
             },
             child: const Text('Submit'),
